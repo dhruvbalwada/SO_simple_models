@@ -6,15 +6,21 @@ function [surf_flux] = surf_flux(Tm)
     Hsens = rhoa*Ah*uw*cpa.*(Tm-Tair);
     L = 2500800-2300*Tm;
     
-    Hlat = 0.0015*L*rhoa.*uw*(rm_vap(Tm) - rm_vap(Tair)); 
+    Hlat = 0.0015*L*rhoa.*uw.*(rm_vap(Tm) - rm_vap(Tair)); 
     
     E = Hlat./L;
+    
+    surf_flux.Hir = Hir;
+    surf_flux.Hsens = Hsens;
+    surf_flux.Hlat = Hlat;
+    surf_flux.E = E;
+    
 end
 
 function [rm] = rm_vap(T)
     global a b c Pa eps
     
-    ebar = 0.98*10^((a+b*T)./(1+c*T));
-    rm = eps*ebar/Pa./(1-ebar/Pa*(1-eps));
+    ebar = 0.98*10.^((a+b*T)./(1+c*T));
+    rm = eps.*ebar/Pa./(1-ebar/Pa*(1-eps));
 
 end
