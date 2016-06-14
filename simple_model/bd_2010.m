@@ -86,9 +86,9 @@ end
 
 %% Make an iterative solver for mixed layer T,S equations (13, 14 in bd 2010)
 
-dt= 10^3; % choose some time step
-for k =1:1000
-    if k==1
+dt= 10^4; % choose some time step
+for iter =1:1000
+    if iter==1
         T_old = T_init;
         S_old = S_init;
         H_old = Hinit;
@@ -100,9 +100,15 @@ for k =1:1000
     gradT = gradients(T_old,dy);
     gradS = gradients(S_old,dy);
     
-    T_new = T_old + dt*(H_old/rho0/cpw/hm + k*slope.*gradT.d2 - psi./hm.*gradT.d1);
-    S_new = S_old + dt*(EP_old.*S_old/hm + k*slope.*gradS.d2 - psi./hm.*gradS.d1);
-    
+    for iter_in =1:100
+        T_new = T_old + dt*(H_old/rho0/cpw/hm + k*abs(slope).*gradT.d2 - psi./hm.*gradT.d1);
+        S_new = S_old + dt*(EP_old.*S_old/hm + k*abs(slope).*gradS.d2 - psi./hm.*gradS.d1);
+        
+        T_new(1) = 1; 
+        T_new(end) =12; 
+        S_new(1) = 34;
+        S_old(1) = 35;
+    end
     errT = mean((T_new-T_old).^2);
     errS = mean((S_new-S_old).^2);
 %     
@@ -140,7 +146,7 @@ for k =1:1000
     
     figure(1)
     hold all
-    plot(k, errT,'o')
+    plot(y, T_new)
 end
 
 
