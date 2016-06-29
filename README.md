@@ -1,6 +1,6 @@
 # SO_simple_models
 
-Simple MATLAB solvers for simple models of Southern Ocean dynamics.
+MATLAB solvers for simple models of Southern Ocean dynamics.
 
 1. MR_2D - Solves for the model that was introduced in Marshall and Radko 2003. Zonally averaged along ACC streamlines with buoyancy relaxation, fixed mixed layer depths and a wind stress. 
 2. MR_3D - Building on the MR_2D model to find solutions with a simple modal structure in the zonal direction. Solve for zonally averaged solution + first zonal mode. 
